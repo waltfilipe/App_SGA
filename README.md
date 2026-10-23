@@ -21,6 +21,32 @@ npm run android  # emulador ou dispositivo
 npm run ios      # macOS + simulador ou Expo Go
 ```
 
+## Publicar na Vercel (web / PC no navegador)
+
+O repositório já inclui `vercel.json` e `api/index.js` (adapter oficial do Expo Router).
+
+1. Acesse [vercel.com/new](https://vercel.com/new) e importe este repositório GitHub.
+2. A Vercel detecta o `buildCommand` (`npm run build` → `expo export -p web`).
+3. Em **Settings → Environment Variables**, adicione:
+   - `EXPO_PUBLIC_GOOGLE_CLIENT_ID` — mesmo valor do `.env` local (se for usar Drive).
+4. Faça o deploy. A URL será algo como `https://seu-projeto.vercel.app`.
+5. No **Google Cloud Console**, inclua essa URL (e `https://seu-projeto.vercel.app/*` se pedido) nos **URIs de redirecionamento OAuth** autorizados.
+
+Arquivos relevantes:
+
+| Arquivo | Função |
+|---------|--------|
+| `vercel.json` | Build, pasta estática `dist/client`, função serverless e rewrites |
+| `api/index.js` | Handler `expo-server/adapter/vercel` apontando para `dist/server` |
+
+Deploy manual (opcional):
+
+```bash
+npx vercel --prod
+```
+
+Requer Node **22+** (compatível com `expo-server`).
+
 ## Conectar o Google Drive
 
 1. Crie um projeto no [Google Cloud Console](https://console.cloud.google.com/).

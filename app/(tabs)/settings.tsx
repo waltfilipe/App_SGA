@@ -5,6 +5,8 @@ import ScreenScroll from '@/components/ScreenScroll';
 import { Text, View } from '@/components/Themed';
 import { useApp } from '@/context/AppProvider';
 import { formatDate } from '@/lib/format';
+import * as AuthSession from 'expo-auth-session';
+
 import { isGoogleConfigured } from '@/lib/googleAuth';
 
 export default function SettingsScreen() {
@@ -21,6 +23,7 @@ export default function SettingsScreen() {
 
   const [folderDraft, setFolderDraft] = useState(driveFolderId);
   const googleReady = isGoogleConfigured();
+  const oauthRedirectUri = AuthSession.makeRedirectUri({ scheme: 'videoatletas' });
 
   const onConnect = async () => {
     try {
@@ -56,6 +59,9 @@ export default function SettingsScreen() {
         {lastSyncAt ? (
           <Text style={styles.statusMuted}>Última sync: {formatDate(lastSyncAt)}</Text>
         ) : null}
+        <Text style={styles.redirectHint} selectable>
+          Redirect OAuth (cadastre no Google): {oauthRedirectUri}
+        </Text>
 
         <View style={styles.row}>
           {!driveAccessToken ? (
@@ -166,6 +172,12 @@ const styles = StyleSheet.create({
   statusMuted: {
     fontSize: 13,
     opacity: 0.6,
+  },
+  redirectHint: {
+    fontSize: 11,
+    opacity: 0.65,
+    lineHeight: 16,
+    fontFamily: 'SpaceMono',
   },
   row: {
     flexDirection: 'row',
