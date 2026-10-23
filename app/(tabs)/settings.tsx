@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Alert, Pressable, StyleSheet, TextInput } from 'react-native';
 
+import InstallMiniApp from '@/components/InstallMiniApp';
 import ScreenScroll from '@/components/ScreenScroll';
 import { Text, View } from '@/components/Themed';
 import { useApp } from '@/context/AppProvider';
@@ -45,6 +46,8 @@ export default function SettingsScreen() {
   return (
     <ScreenScroll>
       <Text style={styles.title}>Configurações</Text>
+
+      <InstallMiniApp />
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Google Drive</Text>

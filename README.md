@@ -47,6 +47,39 @@ npx vercel --prod
 
 Requer Node **22+** (compatível com `expo-server`).
 
+## Mini app (instalável na tela inicial)
+
+Depois do deploy na Vercel, você pode tratar o site como **mini app** (PWA):
+
+| Plataforma | Como instalar |
+|------------|----------------|
+| **Android (Chrome)** | Menu → *Instalar app* — ou use o banner em **Config** |
+| **iPhone (Safari)** | Compartilhar → *Adicionar à Tela de Início* |
+| **PC (Chrome/Edge)** | Ícone de instalação na barra de endereço |
+
+O `app.json` já define `display: "standalone"` (abre sem barra do navegador, como app).
+
+### App “de verdade” na loja (opcional)
+
+Se quiser APK/IPA na Play Store / App Store (não só atalho web):
+
+```bash
+npm install -g eas-cli
+eas login
+eas build:configure
+eas build --platform android   # ou ios
+```
+
+Mesmo código Expo; o build nativo é maior, mas funciona offline com mais controle (cache de vídeo, push, etc.).
+
+### Mini app só para atletas (produto)
+
+Hoje o app é “completo” (treinador + demo). Para um mini app **só leitura para atletas**, o caminho usual é:
+
+1. Publicar a URL/PWA para atletas.
+2. Adicionar **login por atleta** (código ou e-mail) e esconder abas de admin.
+3. Opcional: **baixar vídeos** no aparelho (`expo-file-system`) para assistir offline.
+
 ## Conectar o Google Drive
 
 1. Crie um projeto no [Google Cloud Console](https://console.cloud.google.com/).
